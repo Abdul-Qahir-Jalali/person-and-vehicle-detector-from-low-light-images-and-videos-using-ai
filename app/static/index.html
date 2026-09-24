@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robust Object Detection System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container glass">
+        <header>
+            <h1>AI Object Detection</h1>
+            <p>Detect & count persons and vehicles with advanced enhancement</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-target="image-tab">Image Analysis</button>
+            <button class="tab-btn" data-target="video-tab">Video Analysis</button>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div id="image-tab" class="tab-content active">
+            <div class="upload-zone" id="image-upload-zone">
+                <input type="file" id="image-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <p>Drag & Drop an image here or click to browse</p>
+                </div>
+            </div>
+
+            <div class="loading" id="image-loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Enhancing and detecting...</p>
+            </div>
+
+            <div class="results" id="image-results" style="display: none;">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Persons</h3>
+                        <p id="person-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Vehicles</h3>
+                        <p id="vehicle-count">0</p>
+                    </div>
+                </div>
+                <div class="image-preview">
+                    <img id="result-image" src="" alt="Detected Objects">
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Upload Section -->
+        <div id="video-tab" class="tab-content">
+            <div class="upload-zone" id="video-upload-zone">
+                <input type="file" id="video-input" accept="video/*" hidden>
+                <div class="upload-content">
+                    <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    <p>Drag & Drop a video here or click to browse</p>
+                </div>
+            </div>
+
+            <div class="loading" id="video-loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing video frame by frame... This may take a while depending on the length.</p>
+            </div>
+
+            <div class="results" id="video-results" style="display: none;">
+                <div class="image-preview">
+                    <video id="result-video" controls autoplay loop></video>
+                </div>
+                <a id="download-video" class="btn" download="processed_video.mp4">Download Processed Video</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

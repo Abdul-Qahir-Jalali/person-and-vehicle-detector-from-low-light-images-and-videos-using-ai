@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.git/
+.gitignore
+.vscode/
+scratch/
+uv.exe
+uvw.exe
+uvx.exe

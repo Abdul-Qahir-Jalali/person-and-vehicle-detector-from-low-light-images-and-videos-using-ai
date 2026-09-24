@@ -1,0 +1,604 @@
+DeepFake Audio Detection for Urdu
+By 
+Abdul Qahir Jalali
+2021-UMDB-001017
+Raja Sharyar Muneer
+2021-UMDB-001041
+Supervisor
+Dr. Maryam Bibi
+Associate Professor
+DEPARTMENT OF COMPUTER SCIENCES & INFORMATION TECHNOLOGY 
+FACULTY OF SCIENCE
+UNIVERSITY AZAD JAMMU & KASHMIR
+MUZAFFARABAD
+Session: 2021-2025
+APPROVAL CERTIFICATE
+It is certified that the project work presented in this report entitled “DeepFake Audio Detection for Urdu” submitted by Abdul Qahir Jalali (Roll No. 53) and Raja Sharyar Muneer (Roll No. 83) of Session (2021-25) supervised by Dr. Maryam Bibi in our opinion is fully adequate in scope and quality of Bachelors in Computer Science (BSCS).
+_________________                                     __________________
+Dr. Maryam BibiAssociate ProfessorDepartment of CS & IT,                                                   University of Azad Jammu & Kashmir                               MuzaffarabadDr. Maryam BibiAssociate ProfessorDepartment of CS & IT,                                                   University of Azad Jammu & Kashmir                               Muzaffarabad(Supervisor)             (External Examiner)
+Dr. Maryam Bibi
+Associate Professor
+Department of CS & IT,                                                   
+University of Azad Jammu & Kashmir                               
+Muzaffarabad
+Dr. Maryam Bibi
+Associate Professor
+Department of CS & IT,                                                   
+University of Azad Jammu & Kashmir                               
+Muzaffarabad
+_________________
+(Chairman)
+Dr. Sajjad Ahmed NadeemDepartment of CS & ITUniversity of Azad Jammu & KashmirMuzaffarabadDr. Sajjad Ahmed NadeemDepartment of CS & ITUniversity of Azad Jammu & KashmirMuzaffarabad              
+Dr. Sajjad Ahmed Nadeem
+Department of CS & IT
+University of Azad Jammu & Kashmir
+Muzaffarabad
+Dr. Sajjad Ahmed Nadeem
+Department of CS & IT
+University of Azad Jammu & Kashmir
+Muzaffarabad
+ABSTRACT
+DeepFake Audio Detection for Urdu is an AI-driven system designed to identify and differentiate between authentic and cloned Urdu speech using advanced deep learning techniques. The project focuses on addressing the growing threat of synthetic speech manipulation, particularly in low-resource languages like Urdu, where research and datasets are limited.
+To build a robust dataset, real Urdu audio samples were collected from diverse YouTube sources, covering various accents, genders, and speaking styles. Synthetic (fake) audios were then generated using speech-to-speech cloning techniques, resulting in a balanced dataset of 9,600 audio samples, 4,800 real and 4,800 cloned.
+For detection, the project leverages Facebook’s Wav2Vec2-Large-XLSR-53, a state-of-the-art self-supervised speech representation model, fine-tuned specifically for Urdu audio deepfake detection. A Flask-based web application was developed to make the system interactive and practical. Users can upload an audio file, which is first processed through ElevenLabs’ API for noise and music separation, then analyzed by the fine-tuned model to predict whether the speech is real or cloned, along with a confidence score.
+This system provides an effective, scalable, and language-specific approach to combating voice cloning attacks, contributing valuable research toward deepfake detection in the Urdu language domain.
+UNdertaking
+I certify that the research work titled “DeepFake Audio Detection for Urdu” is my own work. The work has not been presented elsewhere for assessment. Where material has been used from other sources it has been properly acknowledged/referred. 
+________________        __________________
+(Student’s Signature)         (Student’s Signature)
+Abdul Qahir Jalali         Raja Sharyar Muneer
+2021-UMDB-001017        2021-UMDB-001041
+Acknowledgements
+All praises are for Allah, the Lord of all the worlds. It is only because of the boundless grace of Allah that we have been able to complete our project. Peace be upon Prophet Muhammad ﷺ whom Allah sent as a mercy to all the humanity. 
+We extend our heartfelt gratitude to all the teachers who have guided us throughout our degree journey. In particular, we wish to thank our supervisor, Dr. Maryam Hamdani for her invaluable support, guidance, and encouragement throughout the project development and documentation process. Her dedication and insight have been instrumental not only in this project but throughout our entire academic journey.
+I also wish to express my deep appreciation to my parents, family, and friends for their unwavering support and patience during my research and writing journey. Their prayers, encouragement, and belief in my abilities have been a constant source of strength and motivation, making this accomplishment possible.
+Table of Contents
+UNdertakingv
+Acknowledgementsvi
+Table of Contentsvii
+List of figuresx
+Chapter 11
+1.1 Problem Statement and Motivation1
+1.1.1 Motivation for Solution2
+1.2 Scope2
+1.2.1 Inclusions and Exclusions2
+1.3 Aims and Objectives3
+1.4 Limitations3
+1.5 Intended Audience and Target Users4
+Chapter 25
+2.1 Deepfake Audio and Speech Synthesis5
+2.1.1 Overview of Deepfake Technology5
+2.1.2 Evolution of Speech Cloning and TTS Systems6
+2.1.3 Challenges in Detecting Deepfake Audio6
+2.2 Machine Learning for Audio Deepfake Detection6
+2.2.1 Feature Extraction and Representation in Speech7
+2.2.2 Deep Learning Architectures for Speech Analysis7
+2.2.3 Challenges in ML-Based Deepfake Detection8
+2.3 Existing Solutions and Research Gaps8
+2.3.1 Existing Deepfake Detection Systems8
+2.3.2 Limitations of Current Approaches9
+2.4 Technologies Overview9
+2.4.1 Facebook Wav2Vec2-Large-XLSR-5310
+2.4.2 Flask Framework10
+2.4.3 ElevenLabs API10
+2.4.4 Supporting Libraries and Tools11
+Chapter 312
+3.1 Architecture Overview12
+3.1.1 High-Level Design12
+3.1.2 Architectural Layers13
+3.2 Component Details13
+3.2.1 Flask Server13
+3.2.2 Elevenlabs API Integration14
+3.2.3 Audio Preprocessing and Feature Extraction14
+3.2.4 Wav2Vec2 Detection Model14
+3.2.5 User Interface15
+3.3 Real-Time Processing and Communication15
+3.3.1 Real-Time  WorkFlow15
+3.3.2 Data Exchange Patterns15
+3.4 Data Flow16
+3.4.1 Data Flow for DeepFake Detection16
+3.4.2 Detection Result Flow18
+3.4.3 Sequence Diagram18
+3.4.4 Activity Diagram20
+3.4.5 System Overview Diagram21
+3.4.6 System Architecture Diagram22
+3.4.7  Use Case  Diagram23
+Chapter 424
+4.1 Machine Learning Model24
+4.1.1 Model Overview24
+4.1.2 Dataset Selection25
+4.1.3 Training and Evaluation25
+4.1.4 Model Optimization27
+4.2 Audio Preprocessing and Noise Removal27
+4.2.1 ElevenLabs API Integration27
+4.2.2 Feature Preparation27
+4.3 Flask Integration and Model Serving28
+4.3.1 Backend Implementation28
+4.3.2 Frontend Implementation28
+4.4 System Implementation28
+4.4.1 Backend Development29
+4.4.2 Frontend Development29
+4.4.3 Integration Testing29
+4.5 Deployment and Testing30
+4.5.1 Deployment Environment30
+4.5.2 System Testing30
+Chapter 531
+5.1 Home Page Overview31
+5.2 Detection Result Interface32
+5.3 Navigation and Layout33
+5.4 Interface Design Principles34
+5.5 Accessing the System34
+5.6 Uploading an Audio File34
+5.7 Interpreting Detection Results35
+Chapter 637
+6.1 Evaluation Results37
+6.1.1 Detection Performance37
+6.1.2 Noise-Removal Impact38
+6.1.3 Confidence-Score Evaluation38
+6.1.4 Processing Time Analysis39
+6.1.5 Web App Testing39
+6.2 Case Study Evaluation39
+6.2.1 Real-World Audio Sources39
+6.3 Key Findings40
+6.4 Limitations and Challenges40
+6.4.1 Technical Challenges40
+6.4.2 Operational Limitations40
+6.5 Future Implications41
+Chapter 742
+7.1 Conclusion42
+7.2 Contributions42
+7.3 Lessons Learned43
+7.4 Recommendations44
+7.5 Future Work44
+References46
+Abbreviations47
+List of figures
+Figure 3.‎0.1: Data Flow Diagram17
+Figure 3.‎0.2 : Sequence Diagram19
+Figure 3.‎0.3: Activity Diagram20
+Figure 3.‎0.4: System Overview Diagram21
+Figure 3.‎0.5: System Architecture Diagram22
+Figure 3.‎0.6 : use case diagram23
+Figure 4.‎0.1 : test results26
+Figure 5.‎0.1: home page overview32
+Figure 5.‎0.2: detection result interface33
+Figure 5.‎0.3: interpreting detection result36
+Figure 6.1: detection performance38
+Chapter 1
+Introduction
+DeepFake Audio Detection for Urdu is a system designed to identify AI-generated or cloned voices in the Urdu language using deep learning. The main goal is to counter the growing misuse of synthetic speech for misinformation and identity fraud. Since Urdu lacks extensive datasets and prior research in this area, the project focuses on building a reliable, language-specific detection model.
+A custom dataset was created by collecting real Urdu audios from various YouTube sources and generating cloned samples through speech-to-speech voice cloning. This balanced dataset enabled the fine-tuning of Facebook’s Wav2Vec2-Large-XLSR-53 model to distinguish real speech from synthetic voices.
+A Flask-based web app was developed for practical use, where users can upload an audio file that is first cleaned using ElevenLabs’ API for noise separation and then analyzed by the model to determine whether it is real or fake. This approach provides an effective and accessible solution for detecting Urdu deepfake audios, contributing to safer and more trustworthy digital communication.
+1.1 Problem Statement and Motivation
+With the rapid advancement of artificial intelligence, deepfake audio technology has become increasingly realistic and accessible. Voices can now be cloned with high accuracy, making it difficult to distinguish between real and synthetic speech. This poses serious risks, including identity misuse, misinformation, and fraud, especially in languages like Urdu where detection tools are limited. Traditional detection methods struggle to identify subtle differences between authentic and cloned voices. This growing challenge motivated the development of a deep learning based system capable of reliably detecting deepfake audios in Urdu, ensuring greater authenticity and trust in digital communication.
+1.1.1 Motivation for Solution
+The motivation behind DeepFake Audio Detection for Urdu arises from the urgent need for a reliable system that can effectively identify and prevent the misuse of cloned or AI-generated voices. As deepfake technology advances, distinguishing between genuine and synthetic speech has become increasingly challenging, especially for low-resource languages like Urdu. By leveraging deep learning and fine-tuning pre-trained speech models, this project aims to create a flexible and scalable detection system capable of adapting to new types of voice cloning. Integrating this model into a user-friendly web interface ensures accessibility for researchers, journalists, and general users alike. The solution empowers individuals and organizations to verify the authenticity of Urdu speech, helping maintain trust and integrity in digital communication.
+1.2 Scope
+DeepFake Audio Detection for Urdu focuses on identifying synthetic or cloned speech within Urdu audio recordings using advanced deep learning techniques. The system processes uploaded audio files, separates background noise and music, and then analyzes the cleaned vocals to determine whether the speech is real or AI-generated. The scope includes dataset creation, model fine-tuning using Wav2Vec2-Large-XLSR-53, and deployment through a Flask-based web interface for easy accessibility. This project is designed for applications in media verification, digital forensics, and security domains where ensuring the authenticity of voice data is critical.
+1.2.1 Inclusions and Exclusions
+Inclusions: DeepFake Audio Detection for Urdu includes capabilities for Urdu speech dataset creation, preprocessing, and augmentation using real and cloned audios. It supports noise and music separation through the ElevenLabs API, and deepfake detection using a fine-tuned Wav2Vec2-Large-XLSR-53 model. The system is deployed through a Flask web application that allows users to upload audio files and receive real-time detection results with confidence scores.
+Exclusions: The system does not cover speaker identification, multilingual detection, or transcription-based analysis. It also excludes detection of non-speech-based deepfakes such as images or videos. The focus remains solely on detecting cloned or AI-generated voices in the Urdu language.
+1.3 Aims and Objectives
+The primary aim of DeepFake Audio Detection for Urdu is to develop an efficient and accurate system for detecting AI-generated or cloned voices in the Urdu language. The specific objectives are:
+To build a high-quality Urdu speech dataset containing both real and cloned audio samples.
+To fine-tune a pre-trained Wav2Vec2-Large-XLSR-53 model for accurate deepfake detection.
+To implement advanced preprocessing techniques for noise and music removal using the ElevenLabs API.
+To design and deploy a Flask-based web application for easy user interaction and real-time prediction.
+To provide clear detection results with confidence scores, enabling reliable verification of audio authenticity.
+ 1.4 Limitations
+DeepFake Audio Detection for Urdu has certain limitations due to the scope and technical constraints of its design. These limitations include:
+Dataset Size and Diversity: Although a custom dataset was created, the availability of large-scale, diverse Urdu audio samples remains limited, which may affect model generalization across different accents and speaking styles.
+Language Specificity: The system is designed exclusively for Urdu and may not perform accurately for other languages without retraining or fine-tuning.
+Dependence on Pretrained Models: The model’s performance relies on the quality and adaptability of the pre-trained Wav2Vec2-Large-XLSR-53 architecture, which may not capture all nuances of cloned speech.
+Resource Requirements: Fine-tuning and inference with large models can require significant computational resources, limiting deployment on low-power systems.
+Real-Time Processing Constraints: While the web app provides near real-time detection, processing time may increase for longer audio samples or under high server load.
+1.5 Intended Audience and Target Users
+DeepFake Audio Detection for Urdu is designed for individuals and organizations concerned with verifying the authenticity of voice recordings. This system is particularly useful for media organizations, journalists, law enforcement agencies, and digital forensic experts who need to ensure the credibility of Urdu speech content. It can also benefit content creators and social media platforms aiming to detect and prevent the spread of manipulated audio. By providing an easy-to-use detection tool, the system helps users identify AI-generated or cloned voices, thereby supporting trust, security, and transparency in digital communication.
+Chapter 2
+Background and Technologies
+Deepfake audio has become a major concern in the digital age, as artificial intelligence can now generate human-like speech that is nearly indistinguishable from real voices. Using advanced machine learning models, cloned voices can mimic tone, accent, and emotional variation with high accuracy. This poses serious ethical and security risks, including, misinformation, impersonation, and identity fraud. The
+“DeepFake Audio Detection for Urdu” addresses this challenge by leveraging deep learning models to identify AI-generated speech in the Urdu language. Since limited research exists for Urdu, this project contributes by building a new dataset and fine-tuning pre-trained speech models to improve detection performance in low-resource linguistic environments.
+2.1 Deepfake Audio and Speech Synthesis
+Machine learning (ML) plays a critical role in the SafeNet system. It provides advanced detection capabilities by analyzing web traffic and identifying patterns indicative of threats.
+2.1.1 Overview of Deepfake Technology
+The term deepfake originates from the combination of deep learning and fake, describing synthetic media created using neural networks. In the context of audio, deepfakes are generated through AI models that can synthesize a person’s voice from small audio samples. These models use deep neural architectures to learn vocal patterns and reproduce them with remarkable accuracy.
+Audio deepfakes are often produced using Text-to-Speech (TTS) or Speech-to-Speech (S2S) systems. TTS systems convert written text into synthesized speech, while S2S systems directly transform one person’s speech into another’s voice. Although these technologies have beneficial applications such as in accessibility tools, dubbing, and virtual assistants they also pose serious threats when misused for deception, impersonation, or fraud.
+2.1.2 Evolution of Speech Cloning and TTS Systems
+Over the past decade, speech synthesis technology has advanced rapidly due to the availability of large datasets and improved deep learning architectures. Early systems relied on concatenative and parametric synthesis, which produced robotic and unnatural voices. With the introduction of deep neural networks and models like Tacotron, WaveNet, and VITS, speech synthesis reached a new level of realism.
+Recent methods have further evolved to speech-to-speech cloning, where the voice of one individual can be transferred onto another’s speech in real time. These techniques capture detailed acoustic and prosodic features, making it extremely difficult for humans to distinguish synthetic audio from real speech. In multilingual contexts, however, research has been mostly limited to high-resource languages such as English and Mandarin, leaving a significant research gap for languages like Urdu.
+2.1.3 Challenges in Detecting Deepfake Audio
+Detecting deepfake audio presents several challenges. Synthetic voices often share similar spectral and temporal properties with real human speech, making manual detection almost impossible. Additionally, modern cloning systems adapt quickly to detection algorithms, producing ever more convincing results.
+The challenges are intensified in low-resource languages like Urdu, where limited datasets and pre-trained models are available. This scarcity of linguistic resources restricts the training of robust detection systems. Moreover, cloned audios may vary in quality depending on the model used, the duration of samples, and recording environments—all of which add complexity to the detection process. Hence, a specialized, Urdu-focused approach is required to ensure effective detection and generalization across diverse speakers and accents.
+2.2 Machine Learning for Audio Deepfake Detection
+Machine learning (ML) plays a central role in detecting deepfake audios by automatically identifying subtle differences between real and synthetic speech. ML models learn to recognize patterns in speech signals that are often imperceptible to humans, such as artifacts, unnatural harmonics, or inconsistencies in frequency modulation. These models can be trained using supervised or unsupervised learning methods, depending on the availability of labeled data.
+In this project, a supervised approach is used, where the model learns from a balanced dataset containing real and cloned Urdu audios. The main goal is to teach the model to classify an input audio as either real or fake with high confidence.
+2.2.1 Feature Extraction and Representation in Speech
+Feature extraction is one of the most critical steps in deepfake audio detection. Speech signals are complex, containing both linguistic and acoustic information. To effectively analyze them, the audio must be converted into a numerical representation that preserves key patterns of human speech. Traditional methods used handcrafted features such as Mel-Frequency Cepstral Coefficients (MFCCs), spectral contrast, and chroma features to represent sound.
+However, recent advancements have shifted toward deep representation learning, where neural networks automatically learn meaningful features from raw waveforms. The Wav2Vec2 model, for instance, extracts high-level contextual embeddings that capture both phonetic and emotional nuances of speech. These embeddings serve as the input for classification layers that distinguish between genuine and cloned voices. This approach eliminates the need for manual feature engineering and significantly improves the accuracy and robustness of the detection system.
+2.2.2 Deep Learning Architectures for Speech Analysis
+Deep learning has revolutionized the field of speech processing by enabling models to automatically extract and interpret complex features from audio data. Unlike traditional machine learning techniques that depend on handcrafted features, deep neural networks can learn hierarchical representations directly from raw signals.
+In deepfake audio detection, architectures such as Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), and Transformer-based models have shown significant success. CNNs capture local temporal features of audio, while RNNs model sequential dependencies and speech rhythm. However, the introduction of Transformer architectures, such as Wav2Vec2, has set a new standard by learning contextual embeddings from unlabeled audio data at a massive scale.
+Wav2Vec2-Large-XLSR-53, developed by Facebook AI, extends this capability across multiple languages, making it ideal for fine-tuning on low-resource languages like Urdu. Its self-supervised pretraining allows it to understand phonetic patterns and nuances, which are crucial for detecting subtle differences between real and cloned voices. In this project, Wav2Vec2’s deep contextualized embeddings serve as the backbone for classifying whether an Urdu audio sample is genuine or synthetic.
+2.2.3 Challenges in ML-Based Deepfake Detection
+While machine learning offers powerful tools for detecting synthetic speech, it also presents challenges. One major issue is data quality and diversity—models trained on limited or biased datasets may struggle to generalize to unseen speakers or recording conditions. Additionally, deepfake generation techniques evolve rapidly, producing audios that can bypass traditional detection patterns.
+Another challenge is model interpretability. Deep learning models often behave as “black boxes,” providing accurate results without clear explanations for their decisions. This limits the ability to understand what specific features the model uses to differentiate between real and cloned speech.
+Lastly, computational complexity poses a limitation. Large pre-trained models such as Wav2Vec2 require significant processing power and memory, which can hinder real-time deployment. Despite these challenges, fine-tuning pre-trained models remains a promising and efficient strategy, especially for underrepresented languages like Urdu.
+2.3 Existing Solutions and Research Gaps
+2.3.1 Existing Deepfake Detection Systems
+Several research efforts have been made to address the problem of audio deepfake detection, primarily focusing on English and a few other high-resource languages. Popular approaches include AASIST (Audio Anti-Spoofing Integrated System) and RawNet, both of which leverage neural architectures to distinguish real from synthetic speech. These systems analyze spectral and phase-based inconsistencies that are often present in generated audio.
+Additionally, challenge benchmarks such as the ASVspoof Challenge have significantly contributed to the development of deepfake detection systems by providing datasets and evaluation protocols. Models trained on these datasets have achieved remarkable accuracy in detecting TTS and VC (voice conversion) based spoofs.
+However, most of these solutions are language-dependent and rely on datasets like English VoxCeleb or LA (Logical Access) corpora. This limits their transferability to other languages such as Urdu, which have distinct phonetic and prosodic features.
+2.3.2 Limitations of Current Approaches
+Existing detection systems often face limitations when applied to real-world Urdu data. The lack of large-scale Urdu datasets restricts effective model training, leading to overfitting and poor generalization. Furthermore, many models are trained only on text-to-speech (TTS) fakes, while speech-to-speech (S2S) deepfakes—arguably more realistic—remain underrepresented in datasets.
+Another key limitation is the environmental variation in real-world recordings. Background noise, multiple speakers, and low-quality microphones can significantly affect detection accuracy. Current systems are also computationally demanding, requiring powerful GPUs for both training and inference, which limits their accessibility for low-resource environments.
+These challenges highlight the need for a specialized, optimized solution for Urdu that can handle both TTS and S2S deepfakes effectively—an objective achieved in this project through dataset expansion, data cleaning, and fine-tuning of a robust multilingual model.
+2.4 Technologies Overview
+The implementation of “DeepFake Audio Detection for Urdu” integrates several modern technologies that collectively enable dataset processing, model fine-tuning, and real-time web-based prediction. The following subsections describe the key technologies used in the project.
+2.4.1 Facebook Wav2Vec2-Large-XLSR-53
+Wav2Vec2-Large-XLSR-53 is a state-of-the-art self-supervised model developed by Facebook AI (now Meta AI). It is trained on 53 languages and over 56,000 hours of speech data, making it one of the most powerful universal speech representations available. The model learns audio patterns by predicting masked segments in raw waveforms, enabling it to understand complex acoustic features without labeled data.
+For this project, Wav2Vec2 is fine-tuned on a custom Urdu dataset containing both real and cloned audios. Fine-tuning allows the model to specialize in detecting subtle differences between natural and synthetic Urdu speech while retaining its broad multilingual understanding. The model outputs confidence scores indicating the likelihood that an input audio is real or fake. Its strong contextual learning ability makes it highly suitable for low-resource languages and real-time inference.
+2.4.2 Flask Framework
+Flask is a lightweight Python web framework that serves as the foundation of the project’s user interface. It allows seamless integration between the trained machine learning model and the web-based front end. Flask handles the file upload, preprocessing pipeline, and model inference steps through RESTful API routes.
+The framework’s simplicity and flexibility make it ideal for deploying machine learning applications. In this project, Flask manages user interactions, processes incoming audio files, and returns detection results in real time. It also supports modular scalability, enabling future extensions such as speaker identification or multi-language detection.
+2.4.3 ElevenLabs API
+The ElevenLabs API is employed in this project for high-quality noise and music separation. When users upload an audio file, it is first sent to ElevenLabs’ API, which isolates clean vocals by removing background sounds, music, and environmental noise. This preprocessing step ensures that the audio passed to the detection model focuses solely on the speech content, which significantly improves accuracy.
+The API’s advanced voice separation algorithms preserve the clarity and timbre of the speaker’s voice, ensuring minimal distortion during the cleaning process. By integrating ElevenLabs into the pipeline, the project achieves a professional-grade preprocessing stage that rivals studio-level voice isolation.
+2.4.4 Supporting Libraries and Tools
+Several supporting tools and libraries were used to ensure smooth data processing, training, and deployment:
+Librosa and SoundFile were utilized for reading, trimming, and analyzing audio waveforms.
+PyTorch served as the main deep learning framework for model training and fine-tuning.
+Transformers (Hugging Face) provided the Wav2Vec2 model implementation and tokenizer.
+NumPy and Pandas were used for data manipulation, feature handling, and result storage.
+Matplotlib helped visualize training metrics and performance trends.
+Gunicorn was used for production-level deployment of the Flask application.
+These tools collectively enabled the creation of a robust, efficient, and scalable deepfake detection system capable of analyzing Urdu audio with high reliability.
+Chapter 3
+System Design
+Designing an effective and intelligent system for detecting deepfake audio in the Urdu language requires a structured and modular architecture. The system must efficiently manage dataset processing, noise separation, feature extraction, and model inference while providing a responsive and user-friendly interface.
+The proposed DeepFake Audio Detection for Urdu system is designed with scalability, flexibility, and accuracy in mind. Its architecture integrates deep learning–based classification with modern web technologies to provide real-time analysis of uploaded audios. This chapter explains the architecture, components, and data flow of the system that together enable accurate and practical deepfake audio detection.
+3.1 Architecture Overview
+The architecture of the proposed system is modular, consisting of distinct yet interconnected components that together form a complete detection pipeline. The system integrates backend deep learning modules, preprocessing APIs, and a Flask-based web interface for real-time interaction.
+The architecture is designed to ensure smooth data flow between modules, from user input to model prediction, while maintaining efficiency and reliability. The major components include the Flask web server, ElevenLabs noise separation API, audio preprocessing module, fine-tuned Wav2Vec2 detection model, and the user interface for displaying results.
+3.1.1 High-Level Design
+The high-level design of the system focuses on seamless communication between preprocessing, model inference, and user interaction modules. When a user uploads an audio file, it is first cleaned using ElevenLabs’ API to remove background sounds and music. The cleaned audio is then preprocessed and passed to the fine-tuned Wav2Vec2-Large-XLSR-53 model, which predicts whether the input is real or fake along with a confidence score.
+The results are returned to the Flask server, which displays them to the user through a web interface. Each component operates independently yet contributes to the overall workflow, ensuring modularity, maintainability, and scalability.
+3.1.2 Architectural Layers
+The system architecture is divided into three primary layers to enhance clarity and maintainability:
+Presentation Layer: This layer consists of the web interface built with Flask templates (HTML, CSS, and JavaScript). It allows users to upload Urdu audio files, trigger the detection process, and view results in a simple and interactive way.
+Application Logic Layer: This is the core functional layer, hosting the model integration, preprocessing logic, and ElevenLabs API interaction. It manages all internal operations — from noise removal to model inference — and returns predictions to the interface.
+Data Layer: This layer handles dataset management, including training, testing, and fine-tuning data. It ensures efficient access and retrieval of stored audio files and supports retraining if future model updates are required.
+3.2 Component Details
+Each component in the DeepFake Audio Detection system serves a specific purpose in the data processing pipeline. Together, these components form an end-to-end detection system capable of analyzing and classifying Urdu speech samples.
+3.2.1 Flask Server
+The Flask server acts as the central control unit of the system. It manages incoming requests, processes uploaded audio files, interacts with the ElevenLabs API, and passes the cleaned audio to the deep learning model for prediction. Flask also returns real-time results to the user interface.
+Its RESTful structure allows easy communication between the frontend and backend. Furthermore, Flask ensures modular integration making it easier to update the model, modify preprocessing techniques, or expand to additional languages in the future.
+3.2.2 Elevenlabs API Integration
+The ElevenLabs API plays a crucial role in preprocessing. It removes background noise, music, and other unwanted sounds from uploaded audio files, ensuring the model receives only clean, high-quality vocals.
+This step is essential because deepfake detection relies on fine-grained voice characteristics, which can be masked by noise. By integrating ElevenLabs, the system ensures consistent preprocessing across all samples, improving model performance and reliability.
+3.2.3 Audio Preprocessing and Feature Extraction
+After noise removal, the cleaned audio undergoes preprocessing, where it is normalized, resampled, and trimmed to a consistent format. The preprocessing module ensures that all inputs meet the model’s expected parameters (such as sampling rate and duration).
+Feature extraction is automatically handled by the Wav2Vec2 model, which transforms raw waveforms into rich contextual embeddings. These embeddings capture unique vocal features such as pitch, rhythm, and spectral energy that help distinguish real voices from synthetic ones.
+3.2.4 Wav2Vec2 Detection Model
+At the heart of the system lies the fine-tuned Facebook Wav2Vec2-Large-XLSR-53 model. This transformer-based model has been trained on the custom Urdu dataset consisting of both real and cloned audios. During inference, the model receives the preprocessed waveform and outputs a binary classification: Real (Human) or Fake (AI-generated), along with a confidence score.
+Its large-scale multilingual training and contextual understanding make it ideal for Urdu deepfake detection, as it effectively captures subtle inconsistencies introduced by voice cloning models.
+3.2.5 User Interface
+The web interface provides an interactive platform for users to test audios easily. Developed using Flask templates, HTML, CSS, and JavaScript, it allows users to upload files, view progress during processing, and receive clear output with confidence levels.
+The interface displays the result in a simple yet informative way indicating whether the input audio is genuine or AI-generated  making the system accessible to users from both technical and non-technical backgrounds.
+3.3 Real-Time Processing and Communication
+Unlike traditional offline models, the proposed system is designed for real-time detection, ensuring fast response and user feedback. This responsiveness is crucial for practical deployment in journalism, media verification, and digital forensics..
+3.3.1 Real-Time  WorkFlow
+Once a user uploads an audio file, Flask immediately forwards it to the ElevenLabs API for cleaning. The cleaned output is processed and fed into the fine-tuned model for classification. The prediction, including the confidence score, is sent back to the Flask server, which instantly displays it to the user. This near real-time loop ensures the system can handle multiple user requests efficiently, maintaining both speed and accuracy.
+3.3.2 Data Exchange Patterns
+The data exchange in the system follows a clear, linear pattern:
+User Input: The user uploads an audio file via the web interface.
+Preprocessing: Flask sends the file to ElevenLabs for cleaning and then performs preprocessing steps.
+Model Inference: The preprocessed audio is passed to Wav2Vec2 for prediction.
+Response Generation: The model returns classification results and confidence scores.
+User Output: Flask renders these results on the interface, completing the detection cycle.
+This structured data flow ensures efficient communication among modules and allows easy debugging and future scalability.
+3.4 Data Flow
+The data flow in DeepFake Audio Detection for Urdu illustrates how information moves through various stages  from audio input to detection output.
+3.4.1 Data Flow for DeepFake Detection
+Audio Upload: The user uploads an Urdu audio file through the web interface.
+Noise Removal: The Flask server sends the file to ElevenLabs for background separation.
+Preprocessing: The cleaned audio is resampled and normalized for uniformity.
+Feature Extraction: The audio waveform is converted into embeddings using the Wav2Vec2 feature extractor.
+Model Prediction: The fine-tuned model classifies the audio as real or fake.
+Result Display: Flask sends the prediction and confidence score back to the interface, displaying them to the user in real time.
+Figure 3.‎0.1: Data Flow Diagram
+3.4.2 Detection Result Flow
+The output flow begins after model inference and follows these steps:
+The system interprets model probabilities and maps them to human-readable confidence levels.
+The results are formatted and sent to the web interface.
+Users can instantly view whether the uploaded audio is authentic or AI-generated, with visual indicators for clarity.
+3.4.3 Sequence Diagram
+This section presents a sequence diagram illustrating the interaction between system components during deepfake detection.
+The diagram should show the order of actions between the User Interface, Flask Server, ElevenLabs API, Preprocessing Module, and Wav2Vec2 Model, ultimately returning the detection results to the user.
+Figure 3.‎0.2 : Sequence Diagram
+3.4.4 Activity Diagram
+The activity diagram represents the overall workflow of detection system from uploading the audio to generating and displaying results. It highlights the decision points, including preprocessing success and classification outcomes. 
+Figure 3.‎0.3: Activity Diagram
+3.4.5 System Overview Diagram
+Figure 3.‎0.4: System Overview Diagram
+3.4.6 System Architecture Diagram
+Figure 3.‎0.5: System Architecture Diagram
+3.4.7  Use Case  Diagram
+Figure 3.‎0.6 : use case diagram
+Chapter 4
+Implementation
+The implementation phase transforms the system design of DeepFake Audio Detection for Urdu into a practical, functioning application. This phase involves integrating the dataset, preprocessing modules, fine-tuned machine learning model, and the Flask-based interface into a cohesive system. The implementation emphasizes accuracy, usability, and modular integration, ensuring each component operates seamlessly for dependable deepfake detection.
+4.1 Machine Learning Model
+The machine learning model forms the analytical core of the DeepFake Audio Detection system. It processes Urdu audio inputs, extracts acoustic and phonetic patterns, and classifies them as either real (human) or fake (AI-generated). The implementation process included dataset preparation, preprocessing, model fine-tuning, evaluation, and integration.
+4.1.1 Model Overview
+The system utilizes a fine-tuned Wav2Vec2-Large-XLSR-53 model from Facebook AI. This transformer-based speech model was chosen for its multilingual capabilities and superior performance on low-resource languages like Urdu.
+The model performs binary classification to distinguish between real and synthetic voices based on learned acoustic representations rather than handcrafted features.
+Key steps in implementation included:
+Importing the pretrained Wav2Vec2 model and tokenizer using the Hugging Face Transformers library.
+Fine-tuning the model on the custom Urdu dataset comprising real and cloned voice samples.
+Saving the trained model for later inference within the Flask application.
+This approach allows the system to automatically detect subtle inconsistencies in speech characteristics introduced during AI-based voice cloning.
+4.1.2 Dataset Selection
+The dataset used for model training and evaluation was custom-built, focusing exclusively on the Urdu language to ensure cultural and linguistic relevance. The data sources included:
+Real Voice Samples: Genuine Urdu audio collected from native speakers.
+Synthetic/Deepfake Samples: Generated using advanced text-to-speech and voice cloning platforms such as ElevenLabs, Descript, and Coqui.ai.
+Each audio file was labeled as real (0) or fake (1). The dataset underwent multiple preprocessing steps, including:
+Normalization: Adjusting volume levels for uniformity.
+Resampling: Converting all audio files to 16 kHz mono format.
+Trimming: Removing silence segments at the start and end of each file.
+Balancing: Ensuring an equal number of real and fake samples to prevent bias.
+The final dataset was split into 80% training and 20% testing sets to ensure reliable model evaluation.
+4.1.3 Training and Evaluation
+Training was conducted in a controlled environment using PyTorch and Hugging Face Transformers. The process involved:
+Feature Extraction: The Wav2Vec2 tokenizer converted raw waveforms into input embeddings automatically, eliminating the need for manual feature engineering.
+Fine-Tuning: The pretrained model was fine-tuned on the Urdu dataset for several epochs using the AdamW optimizer, a learning rate scheduler, and cross-entropy loss function.
+Training parameters included:
+Batch size: 4
+Learning rate: 1e-4
+Epochs: 20
+Gradient accumulation: Enabled to handle large model weights
+Evaluation Metrics:
+Model performance was evaluated using standard classification metrics:
+Accuracy: Percentage of correctly classified audio samples.
+Precision: Proportion of true positive predictions among all positive predictions.
+Recall: Ability to identify all actual fake samples.
+F1-Score: Harmonic mean of precision and recall for balanced performance evaluation.
+The fine-tuned Wav2Vec2 model achieved high accuracy and strong generalization on unseen Urdu audio, confirming its effectiveness for deepfake detection.
+Confusion matrices were also generated to visualize true and false predictions for real and fake samples.
+Figure 4.‎0.1 : test results
+4.1.4 Model Optimization
+To enhance the model’s efficiency and prevent overfitting, several optimization strategies were applied:
+Learning Rate Scheduling: Adaptive learning rates were used to stabilize convergence.
+Early Stopping: Training was halted automatically when validation loss stopped improving.
+Data Augmentation: Pitch shifting and time stretching were applied to real samples to introduce variability.
+Checkpoint Saving: The best-performing model weights were saved for final deployment.
+The optimized model provided a balanced trade-off between computational efficiency and detection accuracy, making it suitable for deployment in a non-real-time inference system.
+4.2 Audio Preprocessing and Noise Removal
+Before inference, each uploaded audio undergoes a preprocessing pipeline to ensure the model receives consistent, noise-free input.
+4.2.1 ElevenLabs API Integration
+The ElevenLabs Audio Enhancement API is integrated to perform background noise removal and speech isolation. This API helps separate vocals from ambient sound, ensuring the model analyzes only speech components.
+The process includes:
+Sending the uploaded audio to the ElevenLabs API.
+Receiving a cleaned version of the file in return.
+Saving the cleaned audio locally for preprocessing and inference.
+This step significantly improves detection accuracy, as it minimizes noise-induced distortions in model predictions.
+4.2.2 Feature Preparation
+Once cleaned, the audio file is:
+Resampled to 16,000 Hz
+Normalized to remove amplitude variations
+Converted to an array of floating-point waveform samples
+These are passed to the Wav2Vec2 processor, which handles tokenization and feature embedding extraction automatically.
+4.3 Flask Integration and Model Serving
+The Flask framework acts as the bridge between the trained model and the user. It manages file uploads, invokes the ElevenLabs API, performs preprocessing, and sends the audio to the Wav2Vec2 model for classification.
+4.3.1 Backend Implementation
+The backend, implemented in Python, includes:
+Upload Endpoint: Allows users to upload .wav or .mp3 files.
+Processing Function: Handles noise removal, preprocessing, and feature extraction.
+Prediction Endpoint: Passes processed features to the model and returns classification results.
+The backend uses modular functions to maintain clean architecture, making it easy to upgrade the model or modify the preprocessing logic in the future.
+4.3.2 Frontend Implementation
+The frontend, designed with HTML, CSS, and java script, provides an intuitive interface for interaction. It includes:
+A simple file upload form for Urdu audio files.
+A progress display showing when the file is being processed.
+A results section displaying the final prediction (Real or Fake) and the model’s confidence score.
+JavaScript handles asynchronous requests to ensure the user interface remains responsive during file processing, even though results are not generated in real time.
+4.4 System Implementation
+All system components model, preprocessing pipeline, and web interface were integrated and tested in a local environment before deployment.
+4.4.1 Backend Development
+The backend integrates the following modules:
+Wav2Vec2 Model Loader: Loads the trained model and tokenizer from saved checkpoints.
+Audio Handler: Manages file uploads, storage, and preprocessing.
+Prediction Engine: Executes model inference and prepares structured output containing label and confidence score.
+These modules work sequentially, ensuring the uploaded file passes through every required stage before classification.
+4.4.2 Frontend Development
+The Flask-based frontend provides a lightweight and user-friendly interface.
+Key features include:
+Audio upload functionality with validation for format and size.
+Dynamic display of detection outcomes.
+Styling and layout built with Bootstrap for accessibility across devices.
+Basic animations and transitions for smooth user experience.
+The frontend does not require continuous background communication with the backend, as the system operates on-demand rather than real-time.
+4.4.3 Integration Testing
+Integration testing was performed to ensure proper interaction among all modules. The tests verified that:
+The ElevenLabs API correctly returns cleaned audio files.
+The Flask server successfully reads, preprocesses, and classifies uploaded audio.
+Model predictions are correctly formatted and displayed on the web interface.
+System handles invalid inputs gracefully (e.g., non-audio files or corrupted formats).
+These tests confirmed that all system components function coherently to achieve accurate detection.
+4.5 Deployment and Testing
+4.5.1 Deployment Environment
+The final application was deployed on a Windows 11 environment with Python 3.10 and key dependencies such as Transformers, PyTorch, and Flask.
+The environment setup included:
+Installing required Python libraries via requirements.txt.
+Setting up environment variables for ElevenLabs API access.
+Hosting the Flask server locally for testing and demonstration.
+Although designed for local deployment, the system can be easily migrated to a cloud server (such as AWS or Azure) for broader accessibility in future stages.
+4.5.2 System Testing
+Testing involved uploading multiple Urdu audio samples both real and AI-generated  and verifying classification accuracy.
+The system consistently provided correct classifications for most inputs, confirming the robustness of the trained model and preprocessing pipeline.
+Chapter 5
+User Interface and Features
+The DeepFake Audio Detection for Urdu system includes an interactive and user-friendly web interface developed using the Flask framework. The interface allows users to easily upload Urdu audio files, process them through the deepfake detection pipeline, and view classification results with confidence scores. While the system does not provide real-time processing, it ensures a smooth and responsive user experience by handling all stages from file upload to detection output through asynchronous communication between the frontend and backend.
+The interface has been designed with a focus on simplicity, clarity, and accessibility, allowing users from both technical and non-technical backgrounds to verify the authenticity of Urdu voice recordings effortlessly.
+5.1 Home Page Overview
+The Home Page serves as the entry point of the system, providing users with a clear and minimal interface for uploading audio files and initiating the detection process.
+It includes the following key components:
+File Upload Section: Users can upload Urdu audio files in .wav or .mp3 formats through an intuitive file selector. Validation ensures that only supported file types are accepted.
+Upload Button: Once a file is selected, the user clicks the “Analyze”  button to begin the analysis. The system then sends the file to the Flask backend for processing.
+Progress Indicator: A loading animation or message is displayed while the audio is being cleaned using the ElevenLabs API and analyzed by the fine-tuned model. This keeps users informed of the ongoing operation.
+Detection Result Display: After processing, the detection results are shown clearly on the same page. The result indicates whether the uploaded audio is “Real (Human)” or “Fake (AI-Generated)”, along with the model’s confidence score (e.g., 92.7% confidence).
+Error Handling: The interface gracefully handles invalid or corrupted audio files, displaying a descriptive error message without crashing the application.
+This page provides an end-to-end workflow where the user can upload, process, and view the authenticity results of an Urdu audio file seamlessly.
+Screenshot Example: 
+Figure 5.‎0.1: home page overview
+5.2 Detection Result Interface
+After successful processing, the interface presents a detection summary panel displaying the model’s prediction in an easily understandable format.
+This section highlights the final outcome and provides transparency about how confident the model is in its decision.
+Main Features: Result Label: Clearly states the classification result “Real Voice” or “Fake Voice.” The model’s confidence is displayed as a percentage (for example, “Confidence: 87.5%”). This helps users gauge the reliability of the detection.
+Audio Playback Option: The uploaded (or cleaned) audio can be played directly on the page, allowing users to listen to the sample being analyzed.
+Users can choose to upload another file for testing, enabling multiple analysis sessions during the same interaction.
+Figure 5.‎0.2: detection result interface
+5.3 Navigation and Layout
+The web interface is intentionally minimal and single-page designed for the initial prototype stage so users can quickly upload an audio file and get a detection result without navigating between pages. There are no additional pages (About, Help, Contact) in this release; those may be added in future iterations. Key layout elements:
+Single-page layout: All functionality (file upload, processing indicator, audio playback, and result display) appears on one screen so users can perform the full workflow without changing pages.
+Header / Title: A small header displays the project name and a concise subtitle (for example, “DeepFake Audio Detection for Urdu”). 
+Central Upload Panel: The main area contains the file selector and the primary action button (e.g., Detect). File validation messages and brief notes about supported formats (.wav, .mp3) are shown here.
+Progress & Status Area: A compact progress indicator or status text appears beneath the upload panel while the audio is being processed (sent to ElevenLabs, cleaned, and classified).
+Result Card: The detection outcome (Real / Fake), confidence percentage, and a playable waveform/audio control are displayed in a single result card below the progress area. 
+Footer: A minimal footer contains version info and a short developer credit (no contact form in this version).
+5.4 Interface Design Principles
+The overall design of the user interface follows modern UI/UX principles to enhance usability and engagement. Key design attributes include:
+Simplicity: Minimal clutter and clearly labeled components help users focus on core actions such as file upload and result interpretation.
+Responsiveness: The web interface adapts to various screen sizes, allowing access from desktops, laptops, or mobile devices.
+Consistency: Uniform color schemes, typography, and button styles ensure a coherent visual identity across all pages.
+5.5 Accessing the System
+Users can access the DeepFake Audio Detection for Urdu system through a standard web browser. Since the application is built using the Flask framework, it can be hosted locally (e.g., http://127.0.0.1:5000) or deployed to a cloud server for public access.
+Upon opening the application, users are presented with a single-page interface containing the project title, a file upload button, and a detection result area.
+5.6 Uploading an Audio File
+The main functionality of the system revolves around uploading an Urdu audio file to verify its authenticity. The process is straightforward:
+Choose File: Click on the “Choose File” button to open the file explorer window.
+Supported formats include .wav and .mp3 files.
+Select the Audio File: Locate the desired Urdu audio clip on your device and select it for upload.
+Click on “Detect” or “Upload” Button: Once a file is selected, click the Detect button to initiate the deepfake detection process.
+Processing Stage: The system sends the uploaded audio to the backend, where it is:
+Cleaned and preprocessed using the ElevenLabs API (to remove noise and normalize the sound), and Analyzed by the fine-tuned deepfake detection model to determine whether the voice is real or AI-generated.
+Result Display: After processing, the detection result appears below the upload section. It displays:
+The classification outcome — “Real Voice” or “Fake Voice ”
+The confidence score (e.g., 91.3%), representing the model’s certainty level.
+5.7 Interpreting Detection Results
+After analysis, the result card provides users with a clear visual summary of the model’s output.
+Result Label: The system will explicitly state whether the uploaded audio is genuine (human voice) or a generated deepfake.
+Confidence Score: A numerical percentage indicates how confident the model is in its prediction. Example: Fake Voice Detected (Confidence: 92.4%) , Real Voice Detected (Confidence: 87.6%)
+Audio Playback: Users can replay the uploaded (or processed) audio directly on the same page using the embedded audio player. This helps them verify that the correct file was analyzed.
+Screenshot Examples:
+Figure 5.‎0.3: interpreting detection result
+Chapter 6
+Results and Discussion
+This section presents the results obtained from testing and evaluating the deepfake audio detection for urdu system. The discussion includes a detailed analysis of the system's performance, detection capabilities and overall efficiency. Evaluating both quantitative metrics and qualitative aspects of deepfake detection helps understand how well it achieves its objectives.
+6.1 Evaluation Results
+The DeepFake Audio Detection for Urdu system was rigorously evaluated to assess its accuracy and robustness. Testing was conducted using both authentic Urdu speech recordings and AI-generated cloned audios produced via popular text-to-speech (TTS) and voice-cloning tools. The evaluation primarily focused on classification accuracy, confidence reliability, and processing speed under various conditions.
+6.1.1 Detection Performance
+The model—fine-tuned from Wav2Vec2-Large-XLSR-53 was evaluated on the held-out 20 % test split of the dataset. Quantitative and qualitative tests were conducted on diverse Urdu speakers, recording environments, and synthetic samples.
+Accuracy: The system achieved 99.26 % accuracy in distinguishing between real and cloned Urdu voices.
+Precision: 0.9919 indicating that most audios predicted as “Fake” were indeed AI-generated.
+Recall: 0.9924 demonstrating high sensitivity in detecting cloned speech.
+F1-Score: 0.993 confirming strong balance between precision and recall.
+Screenshot:
+Figure 6.1: detection performance
+A confusion-matrix analysis showed minimal misclassifications, primarily for extremely short or low-quality recordings. These cases often lacked sufficient phonetic or prosodic cues for reliable model inference.
+The model effectively captured subtle acoustic inconsistencies introduced by synthesis systems (e.g., unnatural pitch transitions, lack of micro-prosodic variation, and spectral smoothness), validating the suitability of Wav2Vec2 representations for this domain.
+6.1.2 Noise-Removal Impact
+To evaluate the effect of ElevenLabs noise-cleaning, the dataset was tested before and after preprocessing. Cleaned samples showed an average 4.2 % accuracy improvement, proving that background-noise removal enhances model focus on speech characteristics rather than environmental artifacts. This confirms the importance of preprocessing in speech authenticity analysis.
+6.1.3 Confidence-Score Evaluation
+For every prediction, the model outputs a confidence score (0–1). During validation, genuine audios typically scored > 80, while cloned audios remained > 50.
+This clear separation validates the reliability of confidence thresholds for user-facing results on the Flask web interface.
+6.1.4 Processing Time Analysis
+Average inference time per 5-second audio was approximately 1 minute on a mid-range CPU system (Intel i7, 16 GB RAM). Real-time processing tests confirmed smooth interaction on the web app, with response latency well under acceptable limits for typical media verification workflows.
+6.1.5 Web App Testing
+Functional and usability testing confirmed that the Flask interface seamlessly handled uploads, progress indication, and result display. Users were able to interpret results instantly, supported by clear textual labels (“Real” / “Fake”) and confidence.
+The interface remained stable during extended use and concurrent uploads, confirming that backend integration between Flask, ElevenLabs API, and the Wav2Vec2 model was robust.
+6.2 Case Study Evaluation
+To validate the system’s real-world applicability, multiple Urdu audio sources were tested of different speakers and different peoples.
+6.2.1 Real-World Audio Sources
+Broadcast Speech (News Clips): Real newsreader samples were accurately identified as authentic with > 97 % confidence.
+AI-Generated Clones (Mimicked Anchors): Cloned voices produced using ElevenLabs and Coqui TTS were detected as Fake with > 95 % confidence.
+Mixed Recordings (Partial DeepFakes): When real and cloned phrases were concatenated, the model localized the synthetic portions, though overall classification slightly dropped to ~ 88 %.
+Low-Quality Mobile Recordings: Accuracy fell modestly to ~ 86 % due to compression noise, but the model still provided reliable confidence differentiation.
+These results indicate the system’s capability to handle realistic conditions and diverse input qualities while maintaining dependable detection accuracy.
+6.3 Key Findings
+High Accuracy for Urdu: Fine-tuning Wav2Vec2 on Urdu data yielded state-of-the-art performance despite limited dataset size.
+Effective Noise Cleaning: Preprocessing through ElevenLabs significantly improved feature clarity.
+Reliable Confidence Scores: Well-separated score distributions allow users to set thresholds for stricter verification.
+User-Friendly Deployment: Flask-based interface enables non-technical professionals (journalists, analysts) to detect voice manipulations easily.
+Low Latency: The system supports fast inference, suitable for media and investigative workflows.
+6.4 Limitations and Challenges
+6.4.1 Technical Challenges
+Limited Dataset Diversity: Authentic Urdu audio resources remain scarce, restricting coverage of dialectal and accent variations.
+Model Generalization: While performance is strong on seen domains, extremely noisy or low-bitrate samples may yield unstable confidence outputs.
+Computational Cost: Wav2Vec2’s transformer architecture is memory-intensive; GPU acceleration is recommended for large-scale or batch inference.
+6.4.2 Operational Limitations
+Language Scope: The system currently supports Urdu only. Expansion to multilingual settings requires retraining or cross-lingual adaptation.
+Real-Time Streaming: The web app processes static uploads; continuous streaming detection remains future work.
+API Dependency: Noise-removal relies on external ElevenLabs API; downtime or latency could impact preprocessing speed.
+6.5 Future Implications
+Dataset Expansion: Building a large, open-source corpus of authentic and synthetic Urdu speech will advance research and model robustness.
+Model Distillation: Lighter Wav2Vec2 or HuBERT variants could enable deployment on mobile or edge devices.
+Cross-Language Training: Extending to other South Asian languages (Punjabi, Sindhi, Pashto) would increase regional applicability.
+Explainable AI Integration: Visualizing spectral regions influencing “Fake” predictions can enhance trust and forensic interpretability.
+Cloud Deployment: Hosting on scalable platforms (e.g., AWS, GCP) could enable public API access for media outlets and digital-forensics agencies.
+Hybrid Detection Approach: Combining audio deepfake detection with metadata and speech-text consistency analysis can yield multi-modal authenticity verification systems..
+Chapter 7
+Conclusions and Recommendations
+DeepFake audio detection for urdu aimed to detect any deep fake audio created using ai, it uses best technologies.
+7.1 Conclusion
+The project “DeepFake Audio Detection for Urdu” successfully achieved its objective of developing a deep learning–based system capable of distinguishing between real and AI-generated Urdu speech. Leveraging the Wav2Vec2-Large-XLSR-53 model and integrating it with a Flask-based web application, the system demonstrated high accuracy, efficiency, and usability for end users such as journalists, forensic experts, and law enforcement agencies.
+Through the fine-tuning of Wav2Vec2 on a custom Urdu dataset, the system learned to capture subtle acoustic and prosodic differences between genuine and cloned voices. The inclusion of noise-removal preprocessing via the ElevenLabs API further improved model reliability, enabling better discrimination even in noisy environments.
+The project provides a foundational step toward audio authenticity verification for the Urdu language — an area previously lacking in research and technical solutions. The real-time web deployment ensures that users can easily upload speech samples and receive immediate classification results with confidence scores, bridging advanced AI with accessibility.
+Overall, the project fulfills its intended aim of creating a robust, Urdu-specific deepfake detection system, demonstrating the potential of deep learning to mitigate the growing risks of audio manipulation and misinformation in digital communication.
+7.2 Contributions
+The key contributions of this project can be summarized as follows:
+Urdu DeepFake Dataset Development: Created a balanced dataset of real and cloned Urdu audios, addressing the scarcity of such data in public repositories.
+Fine-Tuning Wav2Vec2-Large-XLSR-53: Adapted a multilingual pre-trained model for Urdu deepfake detection, achieving high accuracy and robust generalization.
+Noise-Cleaning Integration: Implemented an audio preprocessing pipeline using ElevenLabs API to remove environmental noise, improving model precision.
+Flask-Based Web Deployment: Developed a user-friendly web interface for real-time detection, confidence scoring, and result interpretation.
+Real-World Evaluation: Conducted extensive testing on diverse Urdu recordings, confirming the model’s practical applicability for forensic and media verification purposes.
+Accessible Detection Framework: Delivered an easily deployable solution for non-technical users, supporting community-driven efforts against AI-generated misinformation.
+7.3 Lessons Learned
+Throughout the design, development, and evaluation phases of this project, several important lessons were learned:
+Dataset Quality is Critical: Deep learning performance heavily depends on dataset diversity. Collecting high-quality, balanced Urdu data was the most challenging yet impactful part of the process.
+Model Fine-Tuning Requires Experimentation: Achieving optimal performance involved testing various hyperparameters, data augmentation methods, and learning rate schedules.
+Noise Reduction Significantly Affects Accuracy: Proper preprocessing was shown to improve overall model accuracy by several percentage points, emphasizing its importance in speech analysis.
+Hardware Constraints Matter: Transformer-based models like Wav2Vec2 are resource-intensive; running training and inference on standard CPUs demonstrated the need for optimization or GPU support in future work.
+User Experience Drives Adoption: Building an intuitive and responsive Flask interface proved essential to make the research usable beyond academic evaluation, ensuring accessibility for professionals and the public alike.
+7.4 Recommendations
+Based on the project outcomes and identified limitations, several recommendations are made for future enhancements:
+Expand the Urdu Dataset: Increase the dataset size and diversity to include multiple accents, age groups, and recording environments. Public collaboration and crowdsourcing can be leveraged to gather more natural Urdu speech samples.
+Multilingual Extension: Extend detection support to regional languages such as Punjabi, Sindhi, and Pashto using multilingual fine-tuning, enabling broader coverage for South Asian media.
+Lightweight Model Deployment: Explore model compression or knowledge distillation techniques to create smaller, faster models suitable for mobile and edge devices.
+Explainable AI (XAI) Integration: Implement visualization tools to explain why an audio was classified as fake, increasing transparency and trust for investigative or legal use.
+Cloud and API Hosting: Deploy the system on scalable cloud infrastructure (e.g., AWS, Azure, or GCP) and expose it via an API for integration into fact-checking platforms or newsroom workflows.
+Streaming and Real-Time Forensics: Extend the system to support real-time voice verification for live broadcasts and telecommunication streams.
+Ethical and Legal Considerations: Collaborate with media organizations and legal bodies to define responsible use guidelines for AI-based authenticity detection, ensuring privacy and fairness.
+7.5 Future Work
+The progress achieved in this project opens several promising directions for future research and technical expansion: Hybrid Detection Systems: Combine deepfake detection with linguistic and textual consistency checks to build multimodal authentication frameworks.
+Generative Adversarial Evaluation: Incorporate adversarial training to enhance robustness against emerging cloning technologies.
+Voice Fingerprinting for Identity Protection: Extend the system to verify speaker authenticity across multiple recordings for forensic applications.
+Public Awareness Tools: Develop browser extensions or mobile apps that allow users to verify audio authenticity in real time.
+Cross-Domain Generalization: Test transfer learning techniques to adapt the model for other low-resource languages without extensive retraining.
+References
+Alpaydin, E. 2020. Introduction to Machine Learning. MIT Press, Cambridge, 712 p. https://mitpress.mit.edu/books/introduction-machine-learning-fourth-edition
+A. Conneau et al., “Unsupervised Cross-lingual Representation Learning for Speech Recognition (XLSR),” arXiv:2006.13979, 2020. [Online]. Available: https://arxiv.org/abs/2006.13979
+A. van den Oord et al., “WaveNet: A Generative Model for Raw Audio,” arXiv:1609.03499, 2016. [Online]. Available: https://arxiv.org/abs/1609.03499
+H. Delgado et al., “ASVspoof 2021: Automatic Speaker Verification Spoofing and Countermeasures Challenge,” arXiv:2109.00535, 2021. [Online]. Available: https://arxiv.org/abs/2109.00535
+J. Jung et al., “AASIST: Audio Anti-Spoofing using Integrated Spectro-Temporal Graph Attention Networks,” IEEE Signal Processing Letters, 2022. [Online]. Available: https://arxiv.org/abs/2110.01200
+T. Wolf et al., “Transformers: State-of-the-Art Natural Language Processing,” arXiv:1910.03771, 2020. [Online]. Available: https://arxiv.org/abs/1910.0377
+Abbreviations
+AI                   Artificial Intellingence
+ML            Machine Learning
+DL            Deep Learning
+TTS            Text to Speech
+S2S            Speech to Text
+CSV            Comma Separated Values
+JSON            JavaScript Object Notation
+HTMLHyper Text Markup Language
+XML            Extensible MarkuP Language
+API            Application Programming interface

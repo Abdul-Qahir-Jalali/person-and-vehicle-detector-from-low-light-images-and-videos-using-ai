@@ -1,0 +1,7 @@
+# Template contract
+
+- Reference: `E:\hammad project\project details\doccumentation\Robust Object Detection System Documentation (Final Master).docx`, a current-project derivative of the older Abdul Qahir/Raja Sharyar FYP report. It is used as the closest intact style-bearing copy because the named older DOCX fails CRC validation for an embedded media item. Retain it unchanged.
+- Fidelity target: reuse the reference DOCX package, style definitions, section geometry, header/footer parts, and page layout; replace report body content with accurate current-project documentation. The source has Letter-sized sections and two section configurations (margins 1/1/1/1 in and 1/1/1.5/1.25 in), Heading 1 at 18 pt, Heading 2 at 14 pt Times New Roman, Heading 3 at 12 pt Times New Roman, and Title at 14 pt. Further font inheritance is style/theme-based.
+- Content flow: centered cover; approval certificate; abstract; undertaking; acknowledgements; contents/list of figures; Chapters 1–7; references; abbreviations. Use the older report's academic chapter/report structure.
+- Evidence basis: source files in `app/`, `README.md`, `requirements.txt`, root diagrams `uc.png`, `arch.png`, `act.png`, `seq.png`. Avoid unsupported claims about model training, dataset, Flask, tracking, deployment, or measured results.
+- Output: `E:\hammad project\project details\doccumentation\Robust Object Detection System FYP Documentation.docx`. QA requires rendering every page and inspecting page images.
